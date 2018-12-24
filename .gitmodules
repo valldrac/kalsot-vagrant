@@ -1,0 +1,3 @@
+[submodule "onionwall"]
+	path = onionwall
+	url = https://github.com/valldrac/onionwall.git

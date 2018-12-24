@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+cd "$(dirname $0)/.."
+
+images=$(find firmware -name "*squashfs-sysupgrade.bin")
+
+echo "The following images were found. Please select one to flash:"
+select image in $images; do
+	scp "$image" root@192.168.8.1:/tmp/sysupgrade.bin
+	ssh root@192.168.8.1 "sysupgrade -n /tmp/sysupgrade.bin"
+	exit $?
+done
+
+echo "No images found. Run 'make firmware' first."
+exit 1

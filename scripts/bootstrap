@@ -1,0 +1,35 @@
+#!/bin/sh
+set -e
+
+# Install requeriments
+sudo -s -- <<EOF
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -q
+apt-get install -qq --no-install-recommends \
+  build-essential \
+  libncurses5-dev \
+  unzip \
+  gettext \
+  bison \
+  zlib1g-dev \
+  gawk \
+  wget \
+  python \
+  git \
+  file \
+  curl \
+  quilt
+apt-get clean -q
+EOF
+
+# Prepare quilt configuration, from https://wiki.openwrt.org/doc/devel/patches
+cat > ~/.quiltrc <<EOF
+QUILT_DIFF_ARGS="--no-timestamps --no-index -p ab --color=auto"
+QUILT_REFRESH_ARGS="--no-timestamps --no-index -p ab"
+QUILT_SERIES_ARGS="--color=auto"
+QUILT_PATCH_OPTS="--unified"
+QUILT_DIFF_OPTS="-p"
+EDITOR="vim"
+EOF
+
+echo "Bootstrap complete!"
