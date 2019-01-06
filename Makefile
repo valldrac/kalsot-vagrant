@@ -6,7 +6,7 @@ sources = $(shell find onionwall)
 make_args = $(if $(V),V=$(V),-j3 -Otarget)
 
 ifdef debug
-make_args += CONFIG_DEBUG=y
+make_args += CONFIG_DEBUG=y CONFIG_GDB=y
 endif
 
 .PHONY: all firmware menuconfig clean dirclean distclean
