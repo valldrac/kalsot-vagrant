@@ -30,7 +30,7 @@ If the build fails, re-run make with **V=s** for debugging output.
 
 The directory with the source code is configured as [rsynced shared folder](https://www.vagrantup.com/docs/synced-folders/rsync.html). It is synchronized automatically to the buildroot by the Makefile. This way lets you to **edit the sources directly in the host** while being completely isolated from the build process.
 
-If you want to customize the image through [OpenWrt Configuration Interface](https://openwrt.org/docs/guide-developer/build-system/use-buildsystem#make_menuconfig) try:
+If you want to customize the image through [menuconfig](https://openwrt.org/docs/guide-developer/build-system/use-buildsystem#make_menuconfig) try:
 
 ```
 $ make menuconfig
@@ -40,7 +40,7 @@ The above executes menuconfig in the buildroot and copies the config file back i
 
 ### Patching the kernel
 
-Follow https://wiki.openwrt.org/doc/devel/patches. For example:
+Follow https://openwrt.org/docs/guide-developer/build-system/use-patches-with-buildsystem:
 
 ```
 $ vagrant ssh
@@ -75,4 +75,4 @@ Additional targets to clean up the mess:
 * `make dirclean` runs `make clean` both in the host and in the buildroot.
 * `make distclean` runs `make clean` and deletes the buildroot completely in the VM.
 
-Remember you can recreate the Vagrant box at any time with `vagrant destroy && vagrant up` followed by `touch onionwall`.
+Remember you can recreate the Vagrant box at any time with `make clean && vagrant destroy && vagrant up`.
