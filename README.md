@@ -38,6 +38,30 @@ $ make menuconfig
 
 The above executes menuconfig in the buildroot and copies the config file back into the source tree. This file includes only the changes compared to the default configuration of OpenWrt.
 
+### Patching the kernel
+
+Follow https://wiki.openwrt.org/doc/devel/patches. For example:
+
+```
+$ vagrant ssh
+$ cd /onionwall
+$ make package/kernel/mac80211/{clean,prepare} V=s QUILT=1
+$ cd build_dir/target-mips_24kc_musl-1.1.16/linux-ar71xx_generic/compat-wireless-2017-01-31
+$ quilt push -a
+$ quilt new 999-ath9k_random_mac_address.patch
+$ quilt edit drivers/net/wireless/ath/ath9k/hw.c
+$ quilt refresh
+$ cd /onionwall
+$ make package/kernel/mac80211/update V=s
+$ make package/kernel/mac80211/{clean,compile} package/index V=s
+```
+
+Copy patch file back to the source tree:
+
+```
+$ vagrant scp default:/onionwall/package/kernel/mac80211/patches/999-ath9k_random_mac_address.patch onionwall/package/kernel/mac80211/patches 
+```
+
 ## Cleaning up
 
 ```
